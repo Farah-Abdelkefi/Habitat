@@ -1,8 +1,4 @@
-@props(['pocket' => false])
-
-
 @if($pocket)
-
     <div class='home-2 mbm hidden-md hidden-lg  header_area main-menu-area' >
         <div class='menu_area mobile-menu' >
 @else
@@ -13,33 +9,23 @@
         <nav class="poket_menu">
             <ul class="sub-menu">
                 <li class="menu-item-has-children">
-                    <a href="#">Notre entreprise</a>
+                    <a href="/#A-propos">Notre entreprise</a>
                 </li>
-                <li class="menu-item-has-children">
-                    <a href="#"> Les portes</a>
-                    <ul class="sub-menu">
-                        <li><a href="#">Porte1</a></li>
-                        <li><a href="#">porte2</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children">
-                    <a href="#">Aménagement intérieurs</a>
-                    <ul class="sub-menu">
-                        <li><a href="#"> Aménagement</a></li>
-                        <li><a href="#"> Aménagement</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children">
-                    <a href="#"> Aménagement extérieurs</a>
-                    <ul class="sub-menu">
-                        <li><a href="#"> Aménagement</a></li>
-                        <li><a href="#"> Aménagement</a></li>
-                    </ul>
-                </li>
+
+                @foreach ($categories as $category  )
+                    @if(! $category->parentCategory)
+
+                        <x-category-menu-item :category=$category />
+
+                    @endif
+
+                @endforeach
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-        @if(! $pocket)
+        @if(! $pocket )
+
+
         <div class="menu-left">
             <div class="main-search-menu">
                 <div class="em-quearys-top msin-menu-search">
@@ -49,8 +35,8 @@
                         </div>
                         <div class="em-quearys-inner">
                             <div class="em-quearys-form">
-                                <form class="top-form-control" action="#" method="get">
-                                    <input type="text" placeholder="Type Your Keyword" name="s" value="" >
+                                <form class="top-form-control" action="/product" method="GET">
+                                    <input type="text" placeholder="Type Your Keyword" name="search" value="{{request('search')}}" >
                                     <button class="top-quearys-style" type="submit"> <i class="icofont-long-arrow-right"></i> </button>
                                 </form>
                                 <div class="em-header-quearys-close text-center mrt10">
