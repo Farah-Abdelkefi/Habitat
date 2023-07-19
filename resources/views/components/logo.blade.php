@@ -1,11 +1,8 @@
-<div class="col-md-2 col-sm-2 col-xs-3">
-    <div class="logo">
-        <a class="main_sticky_main_l" href="/" title="habitat">
-            <img src="{{asset('assets/images/realestate/logo1.png')}}" alt="habitat">
-        </a>
-        <a class="main_sticky_l" href="/" title="poket">
-            <img src="{{asset('assets/images/realestate/real1.png')}}" alt="Habitat">
-        </a>
+@props(['src'])
+
+<div class="col-lg-12">
+    <div class="slide_items  ">
+        <a href="#"><img src="{{asset('storage/'.$src)}}" alt="image"></a>
     </div>
 </div>
 

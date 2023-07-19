@@ -5,24 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
     public function index(Category $category)
     {
-        return view('Products.index',[
-
+        return view('admin.category-table',[
+            'categories' => Category::latest()->filter(
+                \request(['search'])
+            )
+                ->paginate(\request(['row_length'][0]))->withQueryString()
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required'],
-            'slug' => ['required'],
-        ]);
-
-        return Category::create($request->validated());
+        $slug = implode("-", explode(" ",$request->get('name')));
+        Category::create(array_merge($this->validateCategory(), [
+            'slug' =>  $slug
+        ]));
+        return redirect("/category")->with('success', 'Category Added ');
     }
 
     public function show(Category $category)
@@ -35,23 +38,34 @@ class CategoryController extends Controller
             'products' => $products
         ]);
     }
-
-    public function update(Request $request, Category $category)
-    {
-        $request->validate([
-            'name' => ['required'],
-            'slug' => ['required'],
-        ]);
-
-        $category->update($request->validated());
-
-        return $category;
+    public function edit (Category $category ){
+        return redirect("/category")->with(
+            'categoryToedit' , $category
+        );
     }
+    public function update( Category $category)
+    {
+        $attributes = $this->validateCategory($category);
+
+
+        $category->update($attributes);
+
+        return redirect("/category")->with('success' , 'Category Updated ! ');
+    }
+
 
     public function destroy(Category $category)
     {
         $category->delete();
 
-        return response()->json();
+        return redirect("/category")->with('success', 'Category Deleted!');
+    }
+    protected function validateCategory (?Category $category = null): array
+    {
+        $category ??= new Category();
+        return request()->validate([
+            'name' => 'required',
+            'category_id' => ['nullable', Rule::exists('categories', 'id')]
+        ]);
     }
 }

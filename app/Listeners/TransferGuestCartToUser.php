@@ -30,11 +30,14 @@ class TransferGuestCartToUser
         \Cart::session($event->user->id);
 
         $guestCart = session('guest_cart.data');
-        if($guestCart)
+        if($guestCart){
             $guestCartItems = $guestCart->toArray();
 
-        if($guestCartItems)
-            \Cart::add($guestCartItems);
+            if($guestCartItems)
+                \Cart::add($guestCartItems);
+
+        }
+
 
 
 

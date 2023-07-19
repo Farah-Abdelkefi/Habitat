@@ -16,10 +16,10 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'slug' => $this->faker->slug(),
-            'category_id' => Category::factory()->create(),
+            'category_id' => 1,
             'body' => $this->faker->text(),
             'dimensions' => $this->faker->randomNumber(),
-            'image' => $this->faker->imageUrl(),
+            'image' => 'images/YEK80IHWIaakqAzdABx7DOn0y67g5njAwcQoMsD8.png',
             'price' => $this->faker->randomNumber(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

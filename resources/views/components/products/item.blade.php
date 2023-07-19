@@ -11,7 +11,7 @@
             <div class="slide slide1">
                 <div class="content">
                     <div class="icon">
-                        <img src="{{$product->image}}" class="card-img-top" style="height: inherit; " />
+                        <img src="{{asset('storage/'.$product->image)}}" class="card-img-top" style="height: inherit; " />
                     </div>
                 </div>
             </div>

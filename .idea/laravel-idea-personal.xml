@@ -4,9 +4,8 @@
     <option name="generationStringOptionValues">
       <map>
         <entry key="internal.openFile" value="1" />
-        <entry key="newModelSimpleOption:softDeletes" value="1" />
+        <entry key="newModelSimpleOption:timestampsFields" value="" />
         <entry key="postGeneration:controller" value="1" />
-        <entry key="postGeneration:databaseClassFactory" value="1" />
       </map>
     </option>
   </component>

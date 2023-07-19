@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
     public function index()
     {
-
-
+        $product = Product::latest()->filter(
+            \request(['search','category'])
+        )
+            ->paginate(\request(['row_length'][0]))->withQueryString();
+        if(auth()->user()->can('admin')){
+            return view('admin.product-tables',[
+                'products' => $product
+            ]);
+        }
         return view('products.index', [
-            'products' => Product::latest()->filter(
-                \request(['search','category'])
-            )
-                ->paginate(10)->withQueryString(),
+            'products' => $product,
             'categories' => []
         ]);
 
@@ -24,15 +29,13 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required'],
-            'Description' => ['required'],
-            'Dimensions' => ['required'],
-            'image' => ['required'],
-            'Prix' => ['nullable', 'integer'],
-        ]);
+        $slug = implode("-", explode(" ",$request->get('name')));
+        Product::create(array_merge($this->validateProduct(), [
+          'image' => request()->file('image')->store('images'),
+            'slug' =>  $slug
 
-        return Product::create($request->validated());
+        ]));
+        return redirect('/product')->with('success', 'Product Added ');
     }
 
     public function show(Product $product)
@@ -42,25 +45,39 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Request $request, Product $product)
+    public function edit (Product $product ){
+        return redirect('/product')->with(
+            'productToedit' , $product
+        );
+    }
+    public function update( Product $product)
     {
-        $request->validate([
-            'name' => ['required'],
-            'Description' => ['required'],
-            'Dimensions' => ['required'],
-            'image' => ['required'],
-            'Prix' => ['nullable', 'integer'],
-        ]);
+        $attributes = $this->validateProduct($product);
+        if ($attributes['image'] ?? false){
+            $attributes['image'] = \request()->file('image')->store('images');
+        }
 
-        $product->update($request->validated());
+        $product->update($attributes);
 
-        return $product;
+       return redirect('/product')->with('success' , 'Product Updated ! ');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return response()->json();
+        return redirect('/product')->with('success', 'Product Deleted!');
+    }
+    protected function validateProduct(?Product $product = null): array
+    {
+        $product ??= new Product();
+        return request()->validate([
+            'image' => $product->exists ? ['image'] : ['required', 'image'],
+            'name' => 'required',
+            'body' => 'required',
+            'dimensions' => 'required',
+            'price' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
     }
 }

@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Schema;
             $table->integer('dimensions')->nullable();
             $table->string('image');
             $table->integer('price')->nullable();
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->boolean('new_arrival_product')->default(0);
+            $table->boolean('referenced_product')->default(0);
             $table->timestamps();
         });
     }

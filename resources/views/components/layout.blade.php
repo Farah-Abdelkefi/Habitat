@@ -10,6 +10,7 @@
     <meta name="Description" content="">
     <meta name="viewport" content="wicorporateh=device-wicorporateh, initial-scale=1">
     <!-- Favicon Icon -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{asset('assets/images/favicon.png')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('venobox/venobox.css')}}" />
@@ -19,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/allcss/responsive/responsive.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/allcss/responsive/realestate-responsive.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/item.css')}}" />
+    <link rel="stylesheet" href="bootstrap.min.css" >
 
     <!-- modernizr js -->
     <script src="{{asset('assets/js/vendor/modernizr-2.8.3.min.js')}}"></script>
@@ -34,7 +36,16 @@
     <x-menu :pocket=true />
 
     <!-- END MOBILE MENU AREA  -->
-    <x-flash />
+
+    @if (session()->has('success'))
+        <div x-data="{ show: true }"
+             x-init="setTimeout(() => show = false, 4000)"
+             x-show="show"
+             class="alert-info fixed bg-blue-500  py-2 px-4 rounded-xl bottom-3 right-3 text-sm"
+        >
+            <p  >{{ Session::get('success') }}</p>
+        </div>
+    @endif
 
     {{ $slot }}
 

@@ -26,10 +26,9 @@
                             <div class="witr_section_title_inner text-left">
                                 <h2>A propos</h2>
                                 <h3>habitat</h3>
-                                <p>Fondée en 1994, la société habitat est le pionnier tunisien dans le domaine des portes de sécurité.
-                                    Elle réalise des produits toujours innovants du point de vue technologique.
-                                    Elle conjugue sécurité et design dans une vaste gamme de portes et de menuiseries.
-                                    Cela lui a permis de s’affirmer en tant que société la plus innovante du secteur du point de vue technologique.
+                                <p>
+                                    {{ $about->value }}
+
                                 </p>
                             </div>
                         </div>
@@ -40,10 +39,9 @@
                     <div class="about_image_inner">
                         <div class="single_image_area">
                             <div class="single_image single_line_option">
-                                <img src="assets/images/realestate/about-thumb.png" alt="image" />
+                                <img src="{{asset("storage/".$about_img->value)}}" alt="image" />
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -57,46 +55,12 @@
                 <div class="col-lg-12">
                     <div class="carousel_imagess_area">
                         <div class="brand_act">
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/energika.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/huet.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/mobitech.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/mpbs.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/spectra.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/cbm.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/dierre.png" alt="image"></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="slide_items  ">
-                                    <a href="#"><img src="assets/images/logos/maison-du-bois.png" alt="image"></a>
-                                </div>
-                            </div>
+
+                            @foreach( $logos as $logo)
+                                <x-logo :src="$logo->value"/>
+                            @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -110,7 +74,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!------------ Component Start ------------>
-                <x-hotspot-wrapper/>
+                <x-hotspot-wrapper />
                 <!------------ Component End -------------->
             </div>
         </div>
@@ -133,10 +97,13 @@
                             <div class="portfolio_nav  wittr_pfilter_menu">
                                 <ul id="filter" class="filter_menu ">
                                     <li class="current_menu_item" data-filter="*">All Work</li>
-                                    <li data-filter=".business">Porte</li>
-                                    <li data-filter=".developer">Parquets</li>
-                                    <li data-filter=".management">Decor</li>
-                                    <li data-filter=".marketing">Amenagement Exterier</li>
+
+                                    @foreach( $categories as $category)
+                                        @if(! $category->parentCategory)
+                                            <li data-filter=".{{$category->name}}"> {{$category->name}} </li>
+                                        @endif
+                                    @endforeach
+                                    <li data-filter=".bussiness"> Portes </li>
                                 </ul>
                             </div>
                         </div>
@@ -146,58 +113,10 @@
                     <div class="pstyle2">
                         <div class="prot_wrap row portfolio_active">
                             <!-- single portfolio -->
-                            <div class="grid-item col-lg-4 col-md-4 col-xs-12 col-sm-12 witr_all_mb_30 developer">
-                                <div class="single_protfolio">
-                                    <div class="prot_thumb">
-                                        <img src="assets/images/realestate/real1.jpg" alt="image" />
-                                        <div class="prot_content em_port_content">
-                                            <div class="prot_content_inner">
-                                                <div class="picon">
-                                                    <a class="portfolio-icon venobox vbox-item" data-gall="myGallery" href="assets/images/realestate/blog1.jpg"><i class="icofont-image"></i></a>
-                                                </div>
-                                                <h3><a href="#">Demo Media Title 1</a></h3>
-                                                <p> <span class="category-item-p">Developer</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 02 single portfolio -->
-                            <div class="grid-item col-lg-4 col-md-4 col-xs-12 col-sm-12 witr_all_mb_30 business">
-                                <div class="single_protfolio">
-                                    <div class="prot_thumb">
-                                        <img src="assets/images/realestate/real2.jpg" alt="image" />
-                                        <div class="prot_content em_port_content">
-                                            <div class="prot_content_inner">
-                                                <div class="picon">
-                                                    <a class="portfolio-icon venobox vbox-item" data-gall="myGallery" href="assets/images/realestate/blog2.jpg">
-                                                        <i class="icofont-image"></i>
-                                                    </a>
-                                                </div>
-                                                <h3><a href="#">Demo Media Title 2</a></h3>
-                                                <p> <span class="category-item-p">Business</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 03 single portfolio -->
-                            <div class="grid-item col-lg-4 col-md-4 col-xs-12 col-sm-12 witr_all_mb_30 photography">
-                                <div class="single_protfolio">
-                                    <div class="prot_thumb">
-                                        <img src="assets/images/realestate/real3.jpg" alt="image" />
-                                        <div class="prot_content em_port_content">
-                                            <div class="prot_content_inner">
-                                                <div class="picon">
-                                                    <a class="portfolio-icon venobox vbox-item" data-gall="myGallery" href="assets/images/realestate/blog3.jpg"><i class="icofont-image"></i></a>
-                                                </div>
-                                                <h3><a href="#">Demo Media Title 3</a></h3>
-                                                <p><span class="category-item-p">Photography</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @foreach($referenced_products as $ref_product)
+                                <x-referenced :product="$ref_product" />
+                            @endforeach
+
 
                         </div>
                     </div>
@@ -238,40 +157,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-                    <div class="item-instagram">
-                        <img src="assets/images/realestate/follow1.png" />
-                        <div class="icon">
-                            <a href="https://www.instagram.com/habitat_tunisie/"> <i class="icofont-instagram"></i> </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-                    <div class="item-instagram">
-                        <img src="assets/images/realestate/follow2.png" />
-                        <div class="icon">
-                            <a href="https://www.instagram.com/habitat_tunisie/"> <i class="icofont-instagram"></i> </a>
-                        </div>
-                    </div>
-                </div>
+                @foreach( $insta_imgs as $insta_img)
+                    <x-insta-logo :src="$insta_img->value" />
 
-                <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-                    <div class="item-instagram">
-                        <img src="assets/images/realestate/follow3.png" />
-                        <div class="icon">
-                            <a href="https://www.instagram.com/habitat_tunisie/"> <i class="icofont-instagram"></i> </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-                    <div class="item-instagram">
-                        <img src="assets/images/realestate/follow4.png" />
-                        <div class="icon">
-                            <a href="https://www.instagram.com/habitat_tunisie/"> <i class="icofont-instagram"></i> </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
