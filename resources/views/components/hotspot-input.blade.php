@@ -19,7 +19,7 @@
                     <div class="product-inner">
                         <div class="product-image">
                             <a href="/product/{{$product->slug}}">
-                                <img width="450" height="579" src="{{asset('storage/'.$product->image)}}" />
+                                <img  src="{{asset('storage/'.$product->image)}}" />
                             </a>
                         </div>
                         <div class="product-info">

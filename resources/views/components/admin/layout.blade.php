@@ -7,6 +7,7 @@
 
     <!-- Bootstrap Core and vandor -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/plugins/bootstrap/dist/css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/plugins/bootstrap/dist/css/bootstrap.css.map')}}">
 
     <!-- Plugins css -->
@@ -16,8 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main.css')}}">
     <link rel="stylesheet" type="text/css" id="stylesheet" href="{{asset('assets/css/theme1.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/dropify/css/dropify.min.css')}}">
-
-
+    <link rel="stylesheet" href="{{asset('assets/plugins/multi-select/css/multi-select.css')}}">
 
 
     <!-- Fonts -->
@@ -80,6 +80,8 @@
 
 <script src="{{asset('assets/plugins/dropify/js/dropify.min.js')}}"></script>
 <script src="{{asset('assets/js/form/form-advanced.js')}}"></script>
+<script src="{{asset('assets/plugins/multi-select/js/jquery.multi-select.js')}}"></script>
+<script src="{{asset('assets/plugins/bootstrap-multiselect/bootstrap-multiselect.js')}}"></script>
 
 {{$scripts}}
 </body>

@@ -19,7 +19,9 @@
                             <div class="container">
                                 <div class = "row justify-content-md-center">
                                     <x-form.input name="name" id="name" :value="old('name', $hotspot_img->name)"  hidden ></x-form.input>
-                                    <x-form.image-input src="storage/{{$hotspot_img->value}}" name="value" />
+                                    <div class="col-lg-4 col-md-6">
+                                        <x-form.image-input src="storage/{{$hotspot_img->value}}" name="value" />
+                                    </div>
                                 </div>
                                 <div class="row justify-content-md-center">
                                     <div class = "col-sm-auto ">

@@ -21,13 +21,7 @@
                 <x-form.input class="form-control input-block" name="name"  required />
             </td>
             <td>
-                <x-form.select-category >
-                    <option
-                        value="{{null}}"
-                        {{ old('category_id') == null ? 'selected' : '' }}
-                    > None
-                    </option>
-                </x-form.select-category>
+                <x-form.select-category :nullable="true" :req="false" :category-to-edit="null" />
 
             </td>
 
@@ -52,12 +46,7 @@
                                 <x-form.input class="form-control input-block" name="name" :value="old('name', $category->name)"  />
                             </td>
                             <td>
-                                <x-form.select-category >
-                                    <option
-                                        value="{{ null}}"
-                                        {{ old('category_id') == null ? 'selected' : '' }}
-                                    > None </option>
-                                </x-form.select-category>
+                                <x-form.select-category :nullable="true" :req="false" :category-to-edit="$category->parentCategory ? $category->parentCategory->id : null" />
                             </td>
                             <td class="actions">
                                 <x-form.button-action link="category" item="" />

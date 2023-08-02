@@ -22,7 +22,7 @@ class Category extends Model
         $query->where(fn($query) =>
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhereHas('parentCategory',fn($query) =>
-                $query->where('name',$search)
+                $query->where('name','like', '%' . $search . '%')
                 )
         )
         );
@@ -31,6 +31,12 @@ class Category extends Model
 
     }
 
+
+    public function products (){
+
+        return $this->hasMany(Product::class);
+        //return Product::get()->where('category_id',$this->id );
+    }
     public function kids ()
     {
         return Category::get()->where('category_id' ,$this->id);

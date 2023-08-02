@@ -87,12 +87,17 @@
                     <select name="product_id" id="product_id" class="form-control input-block"  >
                         @foreach (\App\Models\Product::all() as $product)
                             @php
+                            if (request()->getRequestUri() == '/hotspot/add') {
+                                $old_prod = '';
+                            }
+                            else{
                                 $old_prod = old("product_id",$hotspot->product_id) == $product->id ? 'selected' : ' ';
+                            }
                             @endphp
 
                             <option
                                 value="{{ $product->id }}"
-                                {{request()->getRequestUri() == '/hotspot/add' ? '' : $old_prod }}
+                                {{ $old_prod }}
                             >{{ ucwords($product->name) }}
                             </option>
                         @endforeach
@@ -106,9 +111,9 @@
         </form>
 
 
-    @if(  request()->getRequestUri() != "/hotspot/add")
+    @if(request()->getRequestUri()!="/hotspot/add")
 
-    <form id="save-form" name="save-form" method="POST" action="/hotspot/edit/{{$hotspot->id}}" class=" save-form hidden">
+    <form id="save-form" name="save-form" method="POST" action="/hotspot/edit/{{$hotspot->id}}" class=" save-form hidden" hidden>
         @csrf
         @method('PATCH')
         <div class="container hidden">
@@ -165,7 +170,6 @@
     <button type="submit" onclick="document.getElementById('save-form').submit()"  class="btn btn-outline-dark"><i class="fa fa-save"></i> save </button>
 
     <a href="/hotspot"  >
-
         <button class="btn btn-outline-dark btn-icon button-discard"  data-toggle="tooltip"   >
             <i class="icon-close" aria-hidden="true"></i>
             Discard

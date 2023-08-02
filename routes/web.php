@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HotSpotInputController;
 use App\Http\Controllers\NewCollectionController;
+use App\Http\Controllers\ReferenceController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\VariablesController;
@@ -24,53 +25,86 @@ use \App\Http\Controllers\CategoryController;
 Route::get('/',[SessionsController::class,'index']);
 
 
-// New Collection Section
-Route::get('collection',[NewCollectionController::class,'index'])->middleware('can:admin');
-Route::patch('collection/edit/{product:id}', [NewCollectionController::class,'update'])->middleware('can:admin');
+Route::middleware('can:admin')->group(function () {
 
-//Reference Section
-Route::get('reference',[NewCollectionController::class,'index'])->middleware('can:admin');
-Route::patch('reference/edit/{product:id}', [NewCollectionController::class,'update'])->middleware('can:admin');
+    // New Collection Section
+    Route::controller(NewCollectionController::class)->group(function () {
+        Route::get('collection', 'index');
+        Route::patch('collection', 'update');
 
-// Hotspot Section
-Route::get('hotspot',[HotSpotInputController::class ,'index'])->middleware('can:admin');
-Route::get('hotspot/add',[HotSpotInputController::class,'index'])->middleware('can:admin');
-Route::Post('hotspot/add',[HotSpotInputController::class,'store'])->middleware('can:admin');
-Route::get('hotspot/edit/{hotSpotInput:id}',[HotSpotInputController::class,'edit'])->middleware('can:admin');
-Route::patch('hotspot/edit/{hotSpotInput:id}',[HotSpotInputController::class,'update'])->middleware('can:admin');
-Route::delete('hotspot/{hotSpotInput:id}',[HotSpotInputController::class,'destroy'])->middleware('can:admin');
-Route::post('hotspot/edit/{hotSpotInput:id}',[HotSpotInputController::class,'edit'])->middleware('can:admin');
+    });
 
-// Logo Section
-Route::get('logo',[VariablesController::class,'index'])->middleware('can:admin');
-Route::delete('logo/{variables:id}',[VariablesController::class,'destroy'])->middleware('can:admin');
-Route::get('logo/add',[VariablesController::class,'index'])->middleware('can:admin');
-Route::post('logo/add',[VariablesController::class,'store'])->middleware('can:admin');
+    // HotSpot Section
+    Route::controller(HotSpotInputController::class)->group(function () {
+        Route::get('hotspot','index');
+        Route::get('hotspot/add', 'index');
+        Route::Post('hotspot/add','store');
+        Route::get('hotspot/edit/{hotSpotInput:id}','edit');
+        Route::patch('hotspot/edit/{hotSpotInput:id}','update');
+        Route::delete('hotspot/{hotSpotInput:id}','destroy');
+        Route::post('hotspot/edit/{hotSpotInput:id}','edit');
+    });
 
-// About Section
-Route::get('about' , [ VariablesController::class,'index' ])->middleware('can:admin');
-Route::patch('about/{variables:id}',[VariablesController::class,'update'])->middleware('can:admin');
+    // About & Logo & Insta Section
+    Route::controller(VariablesController::class)->group(function () {
+
+        // Logo Section
+        Route::get('logo','index');
+        Route::delete('logo/{variables:id}','destroy');
+        Route::get('logo/add','index');
+        Route::post('logo/add','store');
+
+        // About Section
+        Route::get('about' , 'index' );
+        Route::patch('about','update');
+
+        // Instagram Section
+        Route::get('insta','index');
+        Route::patch('insta','update');
+    });
+
+    // Admin Category Section
+    Route::controller(CategoryController::class)->group(function (){
+        Route::get('category/add', 'index');
+        Route::post('category/add', 'store');
+        Route::get('category/edit/{category:id}','edit');
+        Route::patch('category/{category:id}','update');
+        Route::delete('category/{product:id}' ,'destroy');
+        Route::get('category','index');
+
+    });
+
+    // Admin Product Section
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('product/add',  'add');
+        Route::post('product/add', 'store');
+        Route::get('product/edit/{product:id}','edit');
+        Route::patch('product/{product:id}',  'update');
+        Route::delete('product/{product:id}',  'destroy');
+
+    });
+
+    //Reference Section
+    Route::controller(ReferenceController::class)->group(function () {
+
+        Route::get('reference',[ReferenceController::class,'index']);
+        Route::get('reference/add','add');
+        Route::post('reference/add', 'store');
+        Route::get('reference/edit/{reference:id}','edit');
+        Route::patch('reference/{reference:id}','update');
+        Route::delete('reference/{reference:id}','destroy');
+    });
 
 
-// Instagram Section
-Route::get('insta',[VariablesController::class,'index'])->middleware('can:admin');
-Route::patch('insta/{variables:id}',[VariablesController::class,'update'])->middleware('can:admin');
+});
+
+
+
+
+
 Route::get('product',[ProductController::class, 'index']);
 
-// Admin Category Section
-Route::get('category/add',[CategoryController::class, 'index'])->middleware('can:admin');
-Route::post('category/add',[CategoryController::class, 'store'])->middleware('can:admin');
-Route::get('category/edit/{category:id}',[CategoryController::class,'edit'])->middleware('can:admin');
-Route::patch('category/{category:id}',[CategoryController::class,'update'])->middleware('can:admin');
-Route::delete('category/{product:id}' ,[CategoryController::class,'destroy'])->middleware('can:admin');
-Route::get('category',[CategoryController::class,'index'])->middleware('can:admin');
 
-// Admin Product Section
-Route::get('product/add',[ProductController::class, 'index'])->middleware('can:admin');
-Route::post('product/add',[ProductController::class, 'store'])->middleware('can:admin');
-Route::get('product/edit/{product:id}',[ProductController::class,'edit'])->middleware('can:admin');
-Route::patch('product/{product:id}',[ProductController::class,'update'])->middleware('can:admin');
-Route::delete('product/{product:id}' ,[ProductController::class,'destroy'])->middleware('can:admin');
 Route::get('product/{product:slug}',[ProductController::class,'show']);
 Route::get('product-category/{category:slug}',[CategoryController::class,'show']);
 

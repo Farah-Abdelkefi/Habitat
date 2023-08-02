@@ -11,14 +11,16 @@ class ProductController extends Controller
 {
     public function index()
     {
+
         $product = Product::latest()->filter(
             \request(['search','category'])
         )
-            ->paginate(\request(['row_length'][0]))->withQueryString();
-        if(auth()->user()->can('admin')){
-            return view('admin.product-tables',[
-                'products' => $product
-            ]);
+            ->paginate(\request()->input('row_length') ?? 10)->withQueryString();
+        if ( auth()->user() ){
+            if (auth()->user()->can('admin'))
+                return view('admin.product-tables',[
+                    'products' => $product
+                ]);
         }
         return view('products.index', [
             'products' => $product,
@@ -26,14 +28,17 @@ class ProductController extends Controller
         ]);
 
     }
+    public function add()
+    {
+        return view('admin.add-product');
+    }
 
     public function store(Request $request)
     {
         $slug = implode("-", explode(" ",$request->get('name')));
         Product::create(array_merge($this->validateProduct(), [
-          'image' => request()->file('image')->store('images'),
+            'image' => request()->file('image')->store('images'),
             'slug' =>  $slug
-
         ]));
         return redirect('/product')->with('success', 'Product Added ');
     }
@@ -46,9 +51,9 @@ class ProductController extends Controller
     }
 
     public function edit (Product $product ){
-        return redirect('/product')->with(
-            'productToedit' , $product
-        );
+        return view('admin.add-product',[
+            'productToedit' => $product
+        ]);
     }
     public function update( Product $product)
     {
@@ -74,9 +79,9 @@ class ProductController extends Controller
         return request()->validate([
             'image' => $product->exists ? ['image'] : ['required', 'image'],
             'name' => 'required',
-            'body' => 'required',
-            'dimensions' => 'required',
-            'price' => 'required',
+            'body' => '',
+            'dimensions' => '',
+            'price' => '',
             'category_id' => ['required', Rule::exists('categories', 'id')]
         ]);
     }

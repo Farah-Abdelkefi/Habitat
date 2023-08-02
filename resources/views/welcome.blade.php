@@ -1,9 +1,9 @@
 <x-layout  >
 
     <div class="witr_ds_content_area">
-        <div class=" witr_ds_content witr_slick_height text-left" style="background-image:url({{asset('assets/images/realestate/slider1.jpg')}})">
+        <div class=" witr_ds_content witr_slick_height text-left" style="background-image:url({{asset('storage/'.$collection_img->value)}})">
             <div class="witr_ds_content_inner witr_containers fadeInUp">
-                <h2>Collection 2023</h2>
+                <h2>{{ ucwords($collection_title->value) }}</h2>
                 <div class="slider_btn">
                     <div class="witr_btn_style">
                         <div class="witr_btn_sinner">
@@ -82,48 +82,49 @@
     <!-- end image hotspot -->
     <!-- start realisation -->
     <div class="realestate_portfolio_area portfolio_grid_area portfolio_3column_area portfolio_style2 pstyle2 pstyle_1">
-        <div class="container-fluid realisation">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="witr_section_title">
-                        <div class="witr_section_title_inner text-center">
-                            <h3>NOS RÉFERENCES</h3>
+    <div class="container-fluid realisation">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="witr_section_title">
+                    <div class="witr_section_title_inner text-center">
+                        <h3>NOS RÉFERENCES</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="clearfix kicuakta">
+                    <div class="col-md-12">
+                        <div class="portfolio_nav  wittr_pfilter_menu">
+                            <ul id="filter" class="filter_menu ">
+                                <li class="current_menu_item" data-filter="*">All Work</li>
+                                @foreach( $categories as $category)
+                                    @if( ! $category->parentCategory)
+                                        <li data-filter=".{{$category->slug}}">{{$category->name}}</li>
+
+                                    @endif
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="clearfix kicuakta">
-                        <div class="col-md-12">
-                            <div class="portfolio_nav  wittr_pfilter_menu">
-                                <ul id="filter" class="filter_menu ">
-                                    <li class="current_menu_item" data-filter="*">All Work</li>
+            </div>
+            <div class="col-lg-12">
+                <div class="pstyle2">
+                    <div class="prot_wrap row portfolio_active">
+                        <!-- single portfolio -->
+                        @foreach( $references as $ref)
+                            <x-referenced :ref="$ref" />
 
-                                    @foreach( $categories as $category)
-                                        @if(! $category->parentCategory)
-                                            <li data-filter=".{{$category->name}}"> {{$category->name}} </li>
-                                        @endif
-                                    @endforeach
-                                    <li data-filter=".bussiness"> Portes </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="pstyle2">
-                        <div class="prot_wrap row portfolio_active">
-                            <!-- single portfolio -->
-                            @foreach($referenced_products as $ref_product)
-                                <x-referenced :product="$ref_product" />
-                            @endforeach
+                        @endforeach
 
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    <!-- End realisation -->
     <!-- End realisation -->
     <!-- visite virtuelle -->
     <section class="visite_virtuelle">

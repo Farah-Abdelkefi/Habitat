@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Variables::create([
             'name' =>'about_img',
-            'value' => 'images/BiACKdS8MmN3W1qsUaTxEY19CSAbdmvd3Ha2Xtid.png'
+            'value' => 'images/Ah0lXBVYMzyTr3FFLR5WfVb5vgo5O8wNn2i5qWY5.png'
         ]);
 
         User::create([
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Variables::create([
             'name'=>'logo2',
-            'value' => 'images/dierre.png'
+            'value' => 'logos/dierre.png'
         ]);
         Variables::create([
             'name'=>'logo3',
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Variables::create([
             'name' => 'logo4',
-            'value' => 'logoss/huet.png',
+            'value' => 'logos/huet.png',
         ]);
         Variables::create([
             'name' => 'logo5',
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Variables::create([
             'name' => 'logo9',
-            'value' => 'images/spectra.png'
+            'value' => 'logos/spectra.png'
         ]);
         Variables::create([
             'name'=> 'hotspot_img',
@@ -96,6 +96,14 @@ class DatabaseSeeder extends Seeder
         Variables::create([
             'name'=> 'insta_img4',
             'value' => 'images/follow4.png'
+        ]);
+        Variables::create([
+            'name'=> 'collection_img',
+            'value' => 'images/0lwZz0b2t81lsKqyW2p9kDrzi8x49KDPT7L7qbNj.jpg'
+        ]);
+        Variables::create([
+            'name'=> 'collection_title',
+            'value' => 'collection 2023'
         ]);
         HotSpotInput::create([
             'input_left' =>  35,

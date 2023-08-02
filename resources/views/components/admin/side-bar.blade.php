@@ -55,9 +55,8 @@
                     </li>
                     <li class= "{{  $active == "Collection" ? 'active' : '' }}"><a href="/collection"><i class="icon-star"></i><span data-hover="Collection"> Collection </span></a></li>
                     <li class= "{{  $active == "About" ? 'active' : '' }}"><a href="/about" ><i class="icon-speech"></i><span data-hover="About">About</span></a></li>
-                    <li class= "{{  $active == "Logos" ? 'active' : '' }}"><a href="/logo"><i class="icon-people"></i><span data-hover="Partenariat logos">Partenariat logos</span></a></li>
+                    <li class= "{{  $active == "Partenariat" ? 'active' : '' }}"><a href="/logo"><i class="icon-people"></i><span data-hover="Partenariat ">Partenariat </span></a></li>
                     <li class= "{{  $active == "Hotspot" ? 'active' : '' }}"><a href="/hotspot"><i class="icon-equalizer"></i><span data-hover="hotspot"> hotspot </span></a></li>
-                    <li class= "{{  $active == "Reference" ? 'active' : '' }}"><a href="/reference"><i class="icon-picture"></i><span data-hover="Reference"> Reference </span></a></li>
                     <li class= "{{  $active == "Instagram" ? 'active' : '' }}"><a href="/insta"><i class="icon-social-instagram"></i><span data-hover="Instagram"> Instagram </span></a></li>
                     <li class="g_heading">Tables</li>
 
@@ -68,6 +67,10 @@
                     <li class= "{{  $active == "Category" ? 'active' : '' }}">
                         <a href="/category" ><i class="icon-tag"></i><span data-hover="Categories">Categories</span></a>
                     </li>
+                    <li class= "{{  $active == "Reference" ? 'active' : '' }}">
+                        <a href="/reference"><i class="icon-picture"></i><span data-hover="Reference"> Reference </span></a>
+                    </li>
+
                 </ul>
             </nav>
         </div>

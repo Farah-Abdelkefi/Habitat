@@ -24,7 +24,7 @@
 
                 <input name="referenced_product" id="referenced_product" type="checkbox"   value="1" class="imagecheck-input" {{ $product->referenced_product === 1 ? 'checked' : '' }}  >
                 <figure class="imagecheck-figure">
-                    <img src="{{asset('storage/'.$product->image)}}" alt="}" class="imagecheck-image" style="width: fit-content; height: fit-content;">
+                    <img src="{{asset('storage/'.$product->image)}}" alt="}" class="imagecheck-image" >
                 </figure>
                 <div>
                 </div>

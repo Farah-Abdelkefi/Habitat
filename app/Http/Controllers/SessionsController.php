@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Reference;
 use App\Models\Variables;
 use Illuminate\Validation\ValidationException;
 
@@ -20,7 +21,9 @@ class SessionsController extends Controller
             'logos' => Variables::where('name', 'like', '%logo%')->get(),
             'insta_imgs' => Variables::where('name', 'like', '%insta_img%')->get(),
             'categories' => Category::all(),
-            'referenced_products' => Product::where('referenced_product','1')->get()
+            'references' => Reference::all(),
+            'collection_title' => Variables::firstWhere('name','collection_title'),
+            'collection_img' => Variables::firstWhere('name','collection_img'),
         ]);
     }
     public function create()

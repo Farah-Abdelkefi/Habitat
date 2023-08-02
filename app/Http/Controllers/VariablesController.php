@@ -15,7 +15,7 @@ class VariablesController extends Controller
                 'about_img' => Variables::firstWhere('name', 'about_img'),
             ]);
         elseif (\request()->getRequestUri() == "/logo" || \request()->getRequestUri() == "/logo/add" )
-            return view('admin.logo', [
+            return view('admin.Partenaire', [
                 'logos' => Variables::where('name', 'like', '%logo%')->get()
             ]);
         else
@@ -42,14 +42,55 @@ class VariablesController extends Controller
         return $variables;
     }
 
-    public function update(Variables $variables)
+    public function update(Request $request , ?Variables $variables = null)
     {
-        $att = $this->validateVar($variables);
-        ///ddd(\request() , $att);
-        if (str_contains(request()->get('name') , 'img')){
-            $att['value'] = request()->file('value')->store('images');
+       // $att = $this->validateVar($variables);
+        //ddd( $request->all());
+        if ($request->get('value') != null){
+            $variable = Variables::firstWhere('id',$request->get('id'));
+            //ddd($variables);
+            $att = request()->validate([
+                'about_name' =>'required',
+                'about_value' => 'required'
+            ]);
+            $var = ['name' => $att['about_name'],'value' => $att['about_value'] ];
+            $variable->update($var);
         }
-        $variables->update($att);
+        if ($request->file('about_img_value') != null ){
+
+            $variable = Variables::firstWhere('id',$request->get('about_img_id'));
+
+            $att = request()->validate([
+                'about_img_name' =>'required',
+                'about_img_value' =>  ['image','required'],
+            ]);
+            $var = ['name' => $att['about_img_name']];
+
+            $var['value'] = request()->file('about_img_value')->store('images');
+            $variable->update($var);
+        }
+        for ($i = 1 ; $i <= 4 ; $i++){
+            if ($request->file('insta_img_value'.$i) != null ){
+                $variable = Variables::firstWhere('id',$request->get('id'.$i));
+
+                $att = request()->validate([
+                    'name'.$i =>'required',
+                    'insta_img_value'.$i =>  ['required','image'],
+                ]);
+                $var = ['name' => $att['name'.$i ]];
+                $var['value'] = request()->file('insta_img_value'.$i)->store('images');
+                $variable->update($var);
+            }
+        }
+        if ($variables) {
+            $att = $this->validateVar($variables);
+            ///ddd(\request() , $att);
+            if (str_contains(request()->get('name') , 'img')){
+                $att['value'] = request()->file('value')->store('images');
+            }
+            $variables->update($att);
+
+        }
 
         return back()->with('success' , ' Updated ! ');
     }

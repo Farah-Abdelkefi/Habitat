@@ -20,7 +20,7 @@ class Product extends Model
             $query->where(fn($query) =>
                 $query->where('name', 'like', '%' . $search . '%')
                 ->orWhereHas('category',fn($query) =>
-                    $query->where('name',$search)
+                    $query->where('name','like','%'.$search.'%')
                 )
         )
         );
@@ -33,6 +33,11 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function references()
+    {
+        return $this->belongsToMany(Reference::class);
     }
 
 

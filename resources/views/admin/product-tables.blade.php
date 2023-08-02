@@ -20,72 +20,19 @@
     <th>Actions</th>
 </x-slot>
 
-<x-slot name="addRow">
-    <td class="sorting_1">
-        <x-form.input name="image" type="file" required />
-    </td>
-    <td>
-        <x-form.input class="form-control input-block" name="name"  required />
-    </td>
-    <td>
-        <x-form.input class="form-control input-block" name="body"  required />
-    </td>
-    <td>
-        <x-form.input class="form-control input-block" name="dimensions"  required />
-    </td>
-    <td>
-        <x-form.input class="form-control input-block" name="price"  required />
-    </td>
-    <td>
-        <x-form.select-category />
-    </td>
+    <x-slot name="addRow">
 
-    <td class="actions">
-        <x-form.button-action link="product" item="" />
-    </td>
 
-</x-slot>
+    </x-slot>
 
 <x-slot name="links">
     {{$products->links()}}
 </x-slot>
 
     @foreach($products as $product)
-        @if (session()->has('productToedit'))
-            @if($product->id === Session::get('productToedit')->id)
-                <tr role="row" class="adding odd">
-                    <form method="POST" action="/product/{{ $product->id }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
-                        <td class="sorting_1">
-                            <x-form.input name="image" type="file"  :value="old('image', $product->image)" />
-                        </td>
-                        <td>
-                            <x-form.input class="form-control input-block" name="name" :value="old('name', $product->name)"  />
-                        </td>
-                        <td>
-                            <x-form.input class="form-control input-block" name="body" :value="old('body', $product->body)" />
-                        </td>
-                        <td>
-                            <x-form.input class="form-control input-block" name="dimensions" :value="old('dimensions', $product->dimensions)" />
-                        </td>
-                        <td>
-                            <x-form.input class="form-control input-block" name="price"  :value="old('price', $product->price)" />
-                        </td>
-                        <td>
-                            <x-form.select-category />
-                        </td>
 
-                        <td class="actions">
-                            <x-form.button-action link="product" item="" />
-                        </td>
-                    </form>
-                </tr>
-
-            @endif
-        @else
         <tr class="gradeA">
-            <td><img src="{{asset('storage/'.$product->image)}}" style="width: fit-content; height: fit-content;"/></td>
+            <td><img src="{{asset('storage/'.$product->image)}}"/></td>
             <td>{{$product->name }}</td>
             <td>{{$product->body}}</td>
             <td>{{$product->dimensions}}</td>
@@ -95,7 +42,7 @@
                 <x-form.button-action link="product" :item=$product />
             </td>
         </tr>
-        @endif
+
     @endforeach
 
 

@@ -2,47 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Variables;
 
 class NewCollectionController extends Controller
 {
     public function index()
     {
-        if (request()->getRequestUri() == "/collection")
             return view('admin.collection',[
-            'newproducts' => Product::paginate(10)
-            ]);
-        else
-            return view('admin.reference',[
-                'referencedproducts' => Product::paginate(10)
+                'categories' => Category::all(),
+                'collectionTitle' => Variables::firstWhere('name','collection_title'),
+                'collection_img' => Variables::firstWhere('name','collection_img'),
             ]);
     }
-    public function update (Product $product)
+    public function update (Request $request)
     {
-        if (request()->getRequestUri() == "/collection/edit/".$product->id )
+
+        if ( count($request->input('multiselect5')) != 0)
         {
-            if (! request()->new_arrival_product)
-                $att['new_arrival_product'] = 0;
-            else
-                $att = request()->validate([
-                    'new_arrival_product' => 'required'
-                ]);
+            $existing_old = Product::where('new_arrival_product','=','1')->get()->pluck('id')->all();
+            $input_old = array_filter($request->input('multiselect5'), function ($item ){
+                $new_products = Product::where('new_arrival_product','=','1')->get();
+                return $new_products->contains('id','',$item);
+            });
+            $olds = array_diff($existing_old,$input_old);
+            $news =array_diff($request->input('multiselect5'),$input_old);
+            foreach ($olds as $old_id) {
+                $old = Product::firstWhere('id','=',$old_id);
+                $old->update(['new_arrival_product'=> 0]);
+            }
+            foreach ($news as $new_id){
+                $new = Product::firstWhere('id','=',$new_id);
+                $new->update(['new_arrival_product'=> 1]);
+            }
+        }
+        if ($request->input('value') != null ){
+            $variable = Variables::firstWhere('id',$request->input('id'));
+            $att = request()->validate([
+                'name' =>'required',
+                'value' => 'required'
+            ]);
+            $variable->update($att);
+        }
+        if ($request->file('collection_img_value') != null ){
 
-            $product->update($att);
+            $variable = Variables::firstWhere('id',$request->input('collection_img_id'));
+
+            $att = request()->validate([
+                'collection_img_name' =>'required',
+                'collection_img_value' =>  ['image','required'],
+            ]);
+            $var = ['name' => $att['collection_img_name']];
+
+            $var['value'] = request()->file('collection_img_value')->store('images');
+            $variable->update($var);
+        }
             return redirect('/collection')->with('succes' ,'Product Updated ! ');
-        }
-        else {
-            if (! request()->referenced_product)
-                $att['referenced_product'] = 0;
-            else
-                $att = request()->validate([
-                    'referenced_product' => 'required'
-                ]);
-
-            $product->update($att);
-            return redirect('/reference')->with('succes' ,'Product Updated ! ');
-        }
-
-
     }
 }
