@@ -6,8 +6,8 @@
         <div class="hleft">
             <div class="dropdown">
                 <a href="javascript:void(0)" class="nav-link user_btn"><img class="avatar" src="../assets/images/user.png" alt=""/></a>
-                <a href="page-search.html" class="nav-link icon"><i class="fa fa-search"></i></a>
-                <a href="index.html" class="nav-link icon"><i class="fa fa-home"></i></a>
+                <a href="#" class="nav-link icon"><i class="fa fa-search"></i></a>
+                <a href="#" class="nav-link icon"><i class="fa fa-home"></i></a>
 
             </div>
         </div>
